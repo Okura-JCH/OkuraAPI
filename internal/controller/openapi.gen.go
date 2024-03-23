@@ -11,6 +11,10 @@ import (
 	"github.com/oapi-codegen/runtime"
 )
 
+const (
+	BearerAuthScopes = "bearerAuth.Scopes"
+)
+
 // CreateUserRequest defines model for CreateUserRequest.
 type CreateUserRequest struct {
 	Age          int     `json:"age"`
@@ -71,6 +75,9 @@ type ServerInterface interface {
 
 	// (GET /api/v1/users)
 	GetUsers(c *gin.Context)
+
+	// (GET /api/v1/users/me)
+	GetMe(c *gin.Context)
 
 	// (GET /api/v1/users/{user_id})
 	GetUser(c *gin.Context, userId UserId)
@@ -142,6 +149,21 @@ func (siw *ServerInterfaceWrapper) GetUsers(c *gin.Context) {
 	}
 
 	siw.Handler.GetUsers(c)
+}
+
+// GetMe operation middleware
+func (siw *ServerInterfaceWrapper) GetMe(c *gin.Context) {
+
+	c.Set(BearerAuthScopes, []string{})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetMe(c)
 }
 
 // GetUser operation middleware
@@ -237,6 +259,7 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.GET(options.BaseURL+"/api/v1/articles", wrapper.GetArticles)
 	router.GET(options.BaseURL+"/api/v1/articles/:article_id", wrapper.GetArticle)
 	router.GET(options.BaseURL+"/api/v1/users", wrapper.GetUsers)
+	router.GET(options.BaseURL+"/api/v1/users/me", wrapper.GetMe)
 	router.GET(options.BaseURL+"/api/v1/users/:user_id", wrapper.GetUser)
 	router.POST(options.BaseURL+"/auth/v1/login", wrapper.Login)
 	router.POST(options.BaseURL+"/auth/v1/logout", wrapper.Logout)
