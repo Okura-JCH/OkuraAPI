@@ -123,8 +123,8 @@ components:
           type: string
         age:
           type: integer
-        gender_id:
-          type: integer
+        gender:
+          type: string
         image:
           type: string
         in_kitakyushu:
@@ -149,8 +149,8 @@ components:
           type: string
         age:
           type: integer
-        gender_id:
-          type: integer
+        gender:
+          type: string
         image:
           type: string
         in_kitakyushu:
@@ -168,8 +168,8 @@ components:
           type: string
         image:
           type: string
-        category_id:
-          type: integer
+        category:
+          type: string
 
   parameters:
     userId:
