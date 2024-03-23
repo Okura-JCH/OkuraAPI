@@ -109,11 +109,6 @@ func TestStartServer(t *testing.T) {
 
 			calledPath := testHandler.ctx.Request.URL.Path
 
-			log.Println("***********************")
-			log.Println(calledPath)
-			log.Println(tt.path)
-			log.Println("***********************")
-
 			if calledPath != tt.path {
 				t.Errorf("Handler not called for %s", tt.name)
 			}
