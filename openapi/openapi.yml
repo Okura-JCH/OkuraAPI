@@ -1,0 +1,174 @@
+openapi: 3.0.3
+info:
+  title: "Okura API"
+  version: "1.0.0"
+paths:
+  /auth/v1/login:
+    post:
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: "Login success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwtToken:
+                    type: string
+  /auth/v1/logout:
+    post:
+      operationId: logout
+      responses:
+        "200":
+          description: "Logout success"
+  /auth/v1/register:
+    post:
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      responses:
+        "200":
+          description: "Register success"
+  /api/v1/users:
+    get:
+      operationId: getUsers
+      responses:
+        "200":
+          description: "Get users"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GetUsersResponse"
+  /api/v1/users/{user_id}:
+    get:
+      operationId: getUser
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "200":
+          description: "Get user"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetUsersResponse"
+  /api/v1/articles:
+    get:
+      operationId: getArticles
+      responses:
+        "200":
+          description: "Get articles"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GetArticleResponse"
+  /api/v1/articles/{article_id}:
+    get:
+      operationId: getArticle
+      parameters:
+        - $ref: "#/components/parameters/articleId"
+      responses:
+        "200":
+          description: "Get article"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetArticleResponse"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    CreateUserRequest:
+      type: object
+      properties:
+        nickname:
+          type: string
+        age:
+          type: integer
+        gender_id:
+          type: integer
+        image:
+          type: string
+        in_kitakyushu:
+          type: boolean
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - nickname
+        - age
+        - gender_id
+        - in_kitakyushu
+        - email
+        - password
+    GetUsersResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nickname:
+          type: string
+        age:
+          type: integer
+        gender_id:
+          type: integer
+        image:
+          type: string
+        in_kitakyushu:
+          type: boolean
+        email:
+          type: string
+    GetArticleResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        category_id:
+          type: integer
+
+  parameters:
+    userId:
+      name: user_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    articleId:
+      name: article_id
+      in: path
+      required: true
+      schema:
+        type: integer
