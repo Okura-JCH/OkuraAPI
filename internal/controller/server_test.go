@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"log"
 	"net/http"
 	"testing"
 
@@ -13,37 +12,34 @@ type mockHandler struct {
 }
 
 func (s *mockHandler) Login(c *gin.Context) {
-	log.Println("Call Login")
 	s.ctx = c
 }
 
 func (s *mockHandler) Logout(c *gin.Context) {
-	log.Println("Call Logout")
 	s.ctx = c
 }
 
 func (s *mockHandler) Register(c *gin.Context) {
-	log.Println("Call Register")
 	s.ctx = c
 }
 
 func (s *mockHandler) GetUsers(c *gin.Context) {
-	log.Println("Call GetUsers")
 	s.ctx = c
 }
 
 func (s *mockHandler) GetUser(c *gin.Context, userId UserId) {
-	log.Println("Call GetUser")
+	s.ctx = c
+}
+
+func (s *mockHandler) GetMe(c *gin.Context) {
 	s.ctx = c
 }
 
 func (s *mockHandler) GetArticles(c *gin.Context) {
-	log.Println("Call GetArticles")
 	s.ctx = c
 }
 
 func (s *mockHandler) GetArticle(c *gin.Context, articleId ArticleId) {
-	log.Println("Call GetArticle")
 	s.ctx = c
 }
 
@@ -73,24 +69,29 @@ func TestStartServer(t *testing.T) {
 			path:   "/auth/v1/register",
 		},
 		{
-			name:   "GetUser",
-			method: http.MethodGet,
-			path:   "/api/v1/users/1",
-		},
-		{
 			name:   "GetUsers",
 			method: http.MethodGet,
 			path:   "/api/v1/users",
 		},
 		{
-			name:   "GetArticle",
+			name:   "GetUser",
 			method: http.MethodGet,
-			path:   "/api/v1/articles/1",
+			path:   "/api/v1/users/1",
+		},
+		{
+			name:   "GetMe",
+			method: http.MethodGet,
+			path:   "/api/v1/users/me",
 		},
 		{
 			name:   "GetArticles",
 			method: http.MethodGet,
 			path:   "/api/v1/articles",
+		},
+		{
+			name:   "GetArticle",
+			method: http.MethodGet,
+			path:   "/api/v1/articles/1",
 		},
 	}
 
