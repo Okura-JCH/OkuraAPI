@@ -62,6 +62,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetUsersResponse"
+  /api/v1/users/me:
+    get:
+      security:
+        - bearerAuth: []
+      operationId: getMe
+      responses:
+        "200":
+          description: "Get me"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetUsersResponse"
   /api/v1/articles:
     get:
       operationId: getArticles
