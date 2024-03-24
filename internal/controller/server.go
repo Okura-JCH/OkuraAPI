@@ -1,11 +1,22 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
 
-func StartServer(si ServerInterface) {
-	g := gin.Default()
+	"github.com/gin-gonic/gin"
+)
 
-	RegisterHandlers(g, si)
+func StartServer(router *gin.Engine, si ServerInterface) {
+	RegisterHandlers(router, si)
 
-	g.Run()
+	router.POST("/users", func(c *gin.Context) {
+		// ここにユーザーを追加するロジックを実装
+		c.JSON(http.StatusOK, gin.H{"message": "User added successfully"})
+	})
+
+	router.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"status": "UP"})
+	})
+
+	router.Run(":8080")
 }

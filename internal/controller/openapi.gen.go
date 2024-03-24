@@ -19,7 +19,7 @@ const (
 type CreateUserRequest struct {
 	Age          int     `json:"age"`
 	Email        string  `json:"email"`
-	GenderId     int     `json:"gender_id"`
+	Gender       *string `json:"gender,omitempty"`
 	Image        *string `json:"image,omitempty"`
 	InKitakyushu bool    `json:"in_kitakyushu"`
 	Nickname     string  `json:"nickname"`
@@ -28,7 +28,7 @@ type CreateUserRequest struct {
 
 // GetArticleResponse defines model for GetArticleResponse.
 type GetArticleResponse struct {
-	CategoryId  *int    `json:"category_id,omitempty"`
+	Category    *string `json:"category,omitempty"`
 	Description *string `json:"description,omitempty"`
 	Id          *int    `json:"id,omitempty"`
 	Image       *string `json:"image,omitempty"`
@@ -39,7 +39,7 @@ type GetArticleResponse struct {
 type GetUsersResponse struct {
 	Age          *int    `json:"age,omitempty"`
 	Email        *string `json:"email,omitempty"`
-	GenderId     *int    `json:"gender_id,omitempty"`
+	Gender       *string `json:"gender,omitempty"`
 	Id           *int    `json:"id,omitempty"`
 	Image        *string `json:"image,omitempty"`
 	InKitakyushu *bool   `json:"in_kitakyushu,omitempty"`
