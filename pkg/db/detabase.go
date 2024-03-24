@@ -18,7 +18,7 @@ func ConnectDB() *sql.DB {
 	dbName := os.Getenv("DB_NAME")
 
 	// データベース接続文字列の作成
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName)
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s", dbHost, dbPort, dbUser, dbPassword, dbName)
 
 	// データベースへの接続
 	db, err := sql.Open("postgres", dsn)

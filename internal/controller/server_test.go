@@ -45,8 +45,9 @@ func (s *mockHandler) GetArticle(c *gin.Context, articleId ArticleId) {
 
 func TestStartServer(t *testing.T) {
 	testHandler := &mockHandler{}
+	router := gin.Default()
 
-	go StartServer(testHandler)
+	go StartServer(router, testHandler)
 
 	tests := []struct {
 		name   string
