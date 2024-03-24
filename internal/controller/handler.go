@@ -6,6 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func NewEndpointHandler(db *sql.DB) *EndpointHandler {
+	return &EndpointHandler{db: db}
+}
+
 type EndpointHandler struct {
 	db *sql.DB
 }
